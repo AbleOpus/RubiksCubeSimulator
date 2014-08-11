@@ -216,6 +216,7 @@ namespace RubiksCubeSimulator.Views
             }
             else if (ClickMode == ClickMode.Rotation)
             {
+                if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) return;
                 var r = (e.Button == MouseButtons.Left) ? Rotation.Ccw : Rotation.Cw;
                 _rubiksCube.MakeMove(Face, r);
                 InvalidateOtherCubeControls();
