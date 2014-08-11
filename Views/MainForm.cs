@@ -30,11 +30,13 @@ namespace RubiksCubeSimulator.Views
             colorStrip.Colors = Settings.Instance.Palette;
             SetRubiksCube();
             SetHoverEffect();
+            UpdateErrorStatus();
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
+            // Draw border around tableLayoutPanel
             Color borderColor = Color.FromKnownColor(KnownColor.ActiveBorder);
             e.Graphics.DrawRectangle(new Pen(borderColor), 
                 tableLayoutPanel.Left - 1, 
@@ -46,16 +48,24 @@ namespace RubiksCubeSimulator.Views
         private void SetRubiksCube()
         {
             Settings.Instance.Clear();
-            _rubiksCube = new RubiksCube(Settings.Instance.CubeColors);
-            // _rubiksCube = RubiksCube.Create(CubeColorScheme.DevsScheme);
+
+            // Restore cube from settings
+           // _rubiksCube = new RubiksCube(Settings.Instance.CubeColors);
+
+            // Create a solved cube with the developers color scheme
+             _rubiksCube = RubiksCube.Create(CubeColorScheme.DevsScheme);
+
+            // Create a sample scrambled cube
             //_rubiksCube = CreateScrambledCube();
-            Debug.WriteLine(_rubiksCube.Solved);
+
             _rubiksCube.MoveMade += RubiksCubeMoveMade;
-
-            foreach (var display in CubeDisplays)
-                display.RubiksCube = _rubiksCube;
-
             UpdateDisplayedCube();
+        }
+
+        private void UpdateErrorStatus()
+        {
+            var defects = _rubiksCube.GetColorDefects();
+            lblErrorStatus.Text = defects.GetShortReport();
         }
 
         private void SetHoverEffect()
@@ -195,29 +205,7 @@ namespace RubiksCubeSimulator.Views
 
         private void cubeDisplay_CellMouseClicked(object sender, CellMouseClickedEventArgs e)
         {
-            var defects = _rubiksCube.GetColorDefects();
-
-            // There are too many instances of certain colors
-            if (defects.Type.HasFlag(ColorDefectType.TooMany))
-            {
-                var SB = new StringBuilder();
-                SB.Append("There is too much of: ");
-
-                foreach (Color color in defects.Colors)
-                    SB.Append(color.Name + ", ");
-
-                SB.Remove(SB.Length - 2, 2);
-                lblErrorStatus.Text = SB.ToString();
-            }
-            // There are too many distinct colors
-            else if (defects.Type.HasFlag(ColorDefectType.TooManyDistinct))
-            {
-                lblErrorStatus.Text = "There are too many distinct colors";
-            }
-            else
-            {
-                lblErrorStatus.Text = string.Empty;
-            }
+            UpdateErrorStatus();
         }
 
         private void RubiksCubeMoveMade(object sender, CubeMove move)

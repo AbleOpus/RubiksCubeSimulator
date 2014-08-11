@@ -211,17 +211,23 @@ namespace RubiksCubeSimulator.Rubiks
         }
 
         /// <summary>
-        /// Gets a color 
+        /// Creates and returns a ColorDefect based on the current state of the cube
         /// </summary>
-        /// <returns></returns>
         public ColorDefect GetColorDefects()
         {
-            var colorList = new List<Color>();
-            var defectType = ColorDefectType.None;
-
-            if (GetColorsFlattened().Distinct().Count() > 6)
-                defectType |= ColorDefectType.TooManyDistinct;
-
+            // Find redundant face colors
+            var faceColors = GetColorScheme().All;
+            Stack<Color> invalidFaceColors = new Stack<Color>();
+            foreach (Color color in faceColors)
+            {
+                if (faceColors.Count(c => c == color) > 1 &&
+                    !invalidFaceColors.Contains(color))
+                {
+                    invalidFaceColors.Push(color);
+                }
+            }
+      
+            // Find colors occuring more than 9 times
             var scheme = GetColorScheme();
             int frontCount = 0;
             int backCount = 0;
@@ -241,14 +247,19 @@ namespace RubiksCubeSimulator.Rubiks
                 else if (color.RgbEquals(scheme.DownColor)) downCount++;
             }
 
-            if (frontCount > 9) colorList.Add(scheme.FrontColor);
-            if (backCount > 9) colorList.Add(scheme.BackColor);
-            if (leftCount > 9) colorList.Add(scheme.LeftColor);
-            if (rightCount > 9) colorList.Add(scheme.RightColor);
-            if (upCount > 9) colorList.Add(scheme.UpColor);
-            if (downCount > 9) colorList.Add(scheme.DownColor);
-            if (colorList.Count > 0) defectType |= ColorDefectType.TooMany;
-            return new ColorDefect(colorList.ToArray(), defectType);
+            var excessiveColors = new List<Color>();
+            if (frontCount > 9) excessiveColors.Add(scheme.FrontColor);
+            if (backCount > 9) excessiveColors.Add(scheme.BackColor);
+            if (leftCount > 9) excessiveColors.Add(scheme.LeftColor);
+            if (rightCount > 9) excessiveColors.Add(scheme.RightColor);
+            if (upCount > 9) excessiveColors.Add(scheme.UpColor);
+            if (downCount > 9) excessiveColors.Add(scheme.DownColor);
+
+            // Calculate whether there are too many distinct colors in cube
+            bool redundantDistinct = (GetColorsFlattened().Distinct().Count() > 6);
+
+            return new ColorDefect(excessiveColors.ToArray(),
+                invalidFaceColors.ToArray(), redundantDistinct); 
         }
 
         /// <summary>

@@ -53,7 +53,7 @@
             // btnReset
             // 
             this.btnReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnReset.Location = new System.Drawing.Point(548, 11);
+            this.btnReset.Location = new System.Drawing.Point(524, 11);
             this.btnReset.Margin = new System.Windows.Forms.Padding(2);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(75, 23);
@@ -90,7 +90,7 @@
             this.statusStrip.Location = new System.Drawing.Point(0, 521);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 9, 0);
-            this.statusStrip.Size = new System.Drawing.Size(634, 22);
+            this.statusStrip.Size = new System.Drawing.Size(610, 22);
             this.statusStrip.SizingGrip = false;
             this.statusStrip.TabIndex = 19;
             this.statusStrip.Text = "statusStrip";
@@ -103,7 +103,7 @@
             // lblErrorStatus
             // 
             this.lblErrorStatus.Name = "lblErrorStatus";
-            this.lblErrorStatus.Size = new System.Drawing.Size(624, 17);
+            this.lblErrorStatus.Size = new System.Drawing.Size(600, 17);
             this.lblErrorStatus.Spring = true;
             this.lblErrorStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -113,7 +113,7 @@
             this.chkLockColors.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkLockColors.BackgroundImage = global::RubiksCubeSimulator.Properties.Resources.Lock;
             this.chkLockColors.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.chkLockColors.Location = new System.Drawing.Point(567, 482);
+            this.chkLockColors.Location = new System.Drawing.Point(543, 482);
             this.chkLockColors.Margin = new System.Windows.Forms.Padding(2);
             this.chkLockColors.Name = "chkLockColors";
             this.chkLockColors.Size = new System.Drawing.Size(56, 31);
@@ -147,18 +147,18 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(610, 437);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(586, 437);
             this.tableLayoutPanel.TabIndex = 22;
             // 
             // cubeUp
             // 
             this.cubeUp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cubeUp.Face = RubiksCubeSimulator.Rubiks.CubeSide.Up;
-            this.cubeUp.Location = new System.Drawing.Point(154, 2);
+            this.cubeUp.Location = new System.Drawing.Point(148, 2);
             this.cubeUp.Margin = new System.Windows.Forms.Padding(2);
             this.cubeUp.Name = "cubeUp";
             this.cubeUp.NewColor = System.Drawing.Color.Empty;
-            this.cubeUp.Size = new System.Drawing.Size(148, 141);
+            this.cubeUp.Size = new System.Drawing.Size(142, 141);
             this.cubeUp.TabIndex = 9;
             this.cubeUp.Text = "colorGridDisplay1";
             this.cubeUp.CellMouseClicked += new System.EventHandler<RubiksCubeSimulator.Views.CellMouseClickedEventArgs>(this.cubeDisplay_CellMouseClicked);
@@ -167,11 +167,11 @@
             // 
             this.cubeBack.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cubeBack.Face = RubiksCubeSimulator.Rubiks.CubeSide.Back;
-            this.cubeBack.Location = new System.Drawing.Point(458, 147);
+            this.cubeBack.Location = new System.Drawing.Point(440, 147);
             this.cubeBack.Margin = new System.Windows.Forms.Padding(2);
             this.cubeBack.Name = "cubeBack";
             this.cubeBack.NewColor = System.Drawing.Color.Empty;
-            this.cubeBack.Size = new System.Drawing.Size(150, 141);
+            this.cubeBack.Size = new System.Drawing.Size(144, 141);
             this.cubeBack.TabIndex = 3;
             this.cubeBack.Text = "colorGridDisplay1";
             this.cubeBack.CellMouseClicked += new System.EventHandler<RubiksCubeSimulator.Views.CellMouseClickedEventArgs>(this.cubeDisplay_CellMouseClicked);
@@ -180,11 +180,11 @@
             // 
             this.cubeFront.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cubeFront.Face = RubiksCubeSimulator.Rubiks.CubeSide.Front;
-            this.cubeFront.Location = new System.Drawing.Point(154, 147);
+            this.cubeFront.Location = new System.Drawing.Point(148, 147);
             this.cubeFront.Margin = new System.Windows.Forms.Padding(2);
             this.cubeFront.Name = "cubeFront";
             this.cubeFront.NewColor = System.Drawing.Color.Empty;
-            this.cubeFront.Size = new System.Drawing.Size(148, 141);
+            this.cubeFront.Size = new System.Drawing.Size(142, 141);
             this.cubeFront.TabIndex = 0;
             this.cubeFront.Text = "colorGridDisplay1";
             this.cubeFront.CellMouseClicked += new System.EventHandler<RubiksCubeSimulator.Views.CellMouseClickedEventArgs>(this.cubeDisplay_CellMouseClicked);
@@ -193,11 +193,11 @@
             // 
             this.cubeDown.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cubeDown.Face = RubiksCubeSimulator.Rubiks.CubeSide.Down;
-            this.cubeDown.Location = new System.Drawing.Point(154, 292);
+            this.cubeDown.Location = new System.Drawing.Point(148, 292);
             this.cubeDown.Margin = new System.Windows.Forms.Padding(2);
             this.cubeDown.Name = "cubeDown";
             this.cubeDown.NewColor = System.Drawing.Color.Empty;
-            this.cubeDown.Size = new System.Drawing.Size(148, 143);
+            this.cubeDown.Size = new System.Drawing.Size(142, 143);
             this.cubeDown.TabIndex = 11;
             this.cubeDown.Text = "colorGridDisplay1";
             this.cubeDown.CellMouseClicked += new System.EventHandler<RubiksCubeSimulator.Views.CellMouseClickedEventArgs>(this.cubeDisplay_CellMouseClicked);
@@ -206,11 +206,11 @@
             // 
             this.cubeRight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cubeRight.Face = RubiksCubeSimulator.Rubiks.CubeSide.Right;
-            this.cubeRight.Location = new System.Drawing.Point(306, 147);
+            this.cubeRight.Location = new System.Drawing.Point(294, 147);
             this.cubeRight.Margin = new System.Windows.Forms.Padding(2);
             this.cubeRight.Name = "cubeRight";
             this.cubeRight.NewColor = System.Drawing.Color.Empty;
-            this.cubeRight.Size = new System.Drawing.Size(148, 141);
+            this.cubeRight.Size = new System.Drawing.Size(142, 141);
             this.cubeRight.TabIndex = 5;
             this.cubeRight.Text = "colorGridDisplay1";
             this.cubeRight.CellMouseClicked += new System.EventHandler<RubiksCubeSimulator.Views.CellMouseClickedEventArgs>(this.cubeDisplay_CellMouseClicked);
@@ -223,7 +223,7 @@
             this.cubeLeft.Margin = new System.Windows.Forms.Padding(2);
             this.cubeLeft.Name = "cubeLeft";
             this.cubeLeft.NewColor = System.Drawing.Color.Empty;
-            this.cubeLeft.Size = new System.Drawing.Size(148, 141);
+            this.cubeLeft.Size = new System.Drawing.Size(142, 141);
             this.cubeLeft.TabIndex = 7;
             this.cubeLeft.Text = "colorGridDisplay1";
             this.cubeLeft.CellMouseClicked += new System.EventHandler<RubiksCubeSimulator.Views.CellMouseClickedEventArgs>(this.cubeDisplay_CellMouseClicked);
@@ -238,7 +238,7 @@
             this.colorStrip.Location = new System.Drawing.Point(11, 482);
             this.colorStrip.Margin = new System.Windows.Forms.Padding(2);
             this.colorStrip.Name = "colorStrip";
-            this.colorStrip.Size = new System.Drawing.Size(552, 31);
+            this.colorStrip.Size = new System.Drawing.Size(528, 31);
             this.colorStrip.TabIndex = 15;
             this.colorStrip.Text = "colorStrip1";
             this.colorStrip.SelectedIndexChanged += new System.EventHandler(this.colorStrip_SelectedIndexChanged);
@@ -247,7 +247,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(634, 543);
+            this.ClientSize = new System.Drawing.Size(610, 543);
             this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.chkLockColors);
             this.Controls.Add(this.statusStrip);

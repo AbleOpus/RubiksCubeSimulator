@@ -50,23 +50,6 @@ namespace RubiksCubeSimulator.Rubiks
     }
 
     /// <summary>
-    /// Specifies a defect with a cube color configuration
-    /// </summary>
-    [Flags]
-    public enum ColorDefectType
-    {
-        None = 0,
-        /// <summary>
-        /// There are too many instances of one color
-        /// </summary>
-        TooMany = 1,
-        /// <summary>
-        /// There are too many distinct colors (7+)
-        /// </summary>
-        TooManyDistinct = 2
-    }
-
-    /// <summary>
     /// Specifies a simple move algorithm
     /// </summary>
     public enum Algorithm

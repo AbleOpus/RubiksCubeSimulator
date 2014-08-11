@@ -41,6 +41,18 @@ namespace RubiksCubeSimulator.Rubiks
         /// Gets the back color of the cube
         /// </summary>
         public Color BackColor { get; private set; }
+
+        /// <summary>
+        /// Gets all of the face colors
+        /// </summary>
+        public Color[] All
+        {
+            get
+            {
+                return new Color[] { UpColor, DownColor, RightColor, 
+                    LeftColor, FrontColor, BackColor};
+            }
+        }
         #endregion
 
         public CubeColorScheme(Color frontColor, Color backColor, Color rightColor,
