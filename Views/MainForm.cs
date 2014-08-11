@@ -89,7 +89,7 @@ namespace RubiksCubeSimulator.Views
             {
                {Color.White, Color.White, Color.White},
                {Color.White, Color.White, Color.White},
-               {Color.White, Color.White, Color.White}
+               {Color.White, Color.White, Color.Magenta}
             },
              new[,] // Back face
             {
