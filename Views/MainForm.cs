@@ -214,6 +214,10 @@ namespace RubiksCubeSimulator.Views
             {
                 lblErrorStatus.Text = "There are too many distinct colors";
             }
+            else
+            {
+                lblErrorStatus.Text = string.Empty;
+            }
         }
 
         private void RubiksCubeMoveMade(object sender, CubeMove move)
