@@ -8,6 +8,9 @@ namespace RubiksCubeSimulator.Rubiks
     /// </summary>
     class CubeColorScheme
     {
+        /// <summary>
+        /// The developers physical cube color scheme
+        /// </summary>
         public readonly static CubeColorScheme DevsScheme = new CubeColorScheme
             (Color.White, Color.Yellow, Color.Red, Color.Orange, Color.Blue, Color.Green);
 
