@@ -1,105 +1,103 @@
-﻿using System;
-
-namespace RubiksCubeSimulator.Rubiks
+﻿namespace RubiksCubeSimulator.Rubiks
 {
     /// <summary>
-    /// Specifies the rotation direction
+    /// Specifies the rotation direction.
     /// </summary>
     public enum Rotation
     {
         /// <summary>
-        /// Clockwise
+        /// Clockwise.
         /// </summary>
         Cw,
         /// <summary>
-        /// Counter-clockwise
+        /// Counter-clockwise.
         /// </summary>
         Ccw
     }
 
     /// <summary>
-    /// Specifies the sides of a cube
+    /// Specifies the sides of a cube.
     /// </summary>
     public enum CubeSide
     {
         None,
         /// <summary>
-        /// The front of the cube
+        /// The front of the cube.
         /// </summary>
         Front,
         /// <summary>
-        /// The back of the cube
+        /// The back of the cube.
         /// </summary>
         Back,
         /// <summary>
-        /// The right of the cube
+        /// The right of the cube.
         /// </summary>
         Right,
         /// <summary>
-        /// The left of the cube
+        /// The left of the cube.
         /// </summary>
         Left,
         /// <summary>
-        /// The top of the cube
+        /// The top of the cube.
         /// </summary>
         Up,
         /// <summary>
-        /// The bottom of the cube
+        /// The bottom of the cube.
         /// </summary>
         Down
     }
 
     /// <summary>
-    /// Specifies a simple move algorithm
+    /// Specifies a simple move algorithm.
     /// </summary>
     public enum Algorithm
     {
         /// <summary>
-        /// Left CW
+        /// Left CW.
         /// </summary>
         L,
         /// <summary>
-        /// Left CCW
+        /// Left CCW.
         /// </summary>
         Li,
         /// <summary>
-        /// Right CW
+        /// Right CW.
         /// </summary>
         R,
         /// <summary>
-        /// Right CCW
+        /// Right CCW.
         /// </summary>
         Ri,
         /// <summary>
-        /// Down CW
+        /// Down CW.
         /// </summary>
         D,
         /// <summary>
-        /// Down CCw
+        /// Down CCw.
         /// </summary>
         Di,
         /// <summary>
-        /// Up CW
+        /// Up CW.
         /// </summary>
         U,
         /// <summary>
-        /// Up CCW
+        /// Up CCW.
         /// </summary>
         Ui,
         /// <summary>
-        /// Front CW
+        /// Front CW.
         /// </summary>
         F,
         /// <summary>
-        /// Front CCW
+        /// Front CCW.
         /// </summary>
         Fi, 
         /// <summary>
-        /// Back CW
+        /// Back CW.
         /// </summary>
         B,
         /// <summary>
-        /// Back CCW
+        /// Back CCW.
         /// </summary>
         Bi
     }

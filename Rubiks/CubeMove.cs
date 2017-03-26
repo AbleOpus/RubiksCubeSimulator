@@ -3,19 +3,19 @@
 namespace RubiksCubeSimulator.Rubiks
 {
     /// <summary>
-    /// Represents a single rubiks cube movement
+    /// Represents a single rubiks cube movement.
     /// </summary>
-    class CubeMove
+    internal class CubeMove
     {
         /// <summary>
-        /// Gets the side corresponding to the move
+        /// Gets the side corresponding to the move.
         /// </summary>
-        public CubeSide Side { get; private set; }
+        public CubeSide Side { get; }
 
         /// <summary>
-        /// Gets the move direction
+        /// Gets the move direction.
         /// </summary>
-        public Rotation Rotation { get; private set;}
+        public Rotation Rotation { get; }
 
         public CubeMove(CubeSide side, Rotation rotation)
         {
@@ -24,8 +24,9 @@ namespace RubiksCubeSimulator.Rubiks
         }
 
         /// <summary>
-        /// Creates an instance of CubeMove from a single notation 
+        /// Creates an instance of CubeMove from a single notation.
         /// </summary>
+        /// <exception cref="ArgumentException">Value is not valid notation.</exception>
         public CubeMove(string notation)
         {
             switch (notation.Trim().ToLower())
@@ -91,7 +92,7 @@ namespace RubiksCubeSimulator.Rubiks
                     break;
 
                 default:
-                    throw new ArgumentException("Value is not valid notation", "notation");
+                    throw new ArgumentException("Value is not valid notation.", nameof(notation));
             }
         }
 

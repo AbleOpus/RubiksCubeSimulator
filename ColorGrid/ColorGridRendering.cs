@@ -4,14 +4,14 @@ namespace RubiksCubeSimulator.ColorGrid
 {
     /// <summary>
     /// Provides a rendering functionality to render a ColorGrid in different ways.
-    /// All rendering logic works on a percentage basis (0-1)
+    /// All rendering logic works on a percentage basis (0-1).
     /// </summary>
-    static class ColorGridRendering
+    internal static class ColorGridRendering
     {
         /// <summary>
-        /// Gets the grid cell point that contains the specified absolute position
+        /// Gets the grid cell point that contains the specified absolute position.
         /// </summary>
-        /// <returns>-1, if no cell contains the specified position</returns>
+        /// <returns>-1, if no cell contains the specified position.</returns>
         public static Point GetGridPointFromPosition(ColorGridStyle style, Point pos, Size drawRegion)
         {
             var rects = GetAllCellBounds(style, drawRegion);
@@ -28,9 +28,9 @@ namespace RubiksCubeSimulator.ColorGrid
         }
 
         /// <summary>
-        /// Gets the Bounds of a cell that contains the specified absolute position
+        /// Gets the Bounds of a cell that contains the specified absolute position.
         /// </summary>
-        /// <returns>Rectangle.Empty, if no cell contains the specified position</returns>
+        /// <returns>Rectangle.Empty, if no cell contains the specified position.</returns>
         public static RectangleF GetCellRectFromPosition(ColorGridStyle style, Point pos, Size drawRegion)
         {
             foreach (var rect in GetAllCellBounds(style, drawRegion))
@@ -40,7 +40,7 @@ namespace RubiksCubeSimulator.ColorGrid
         }
 
         /// <summary>
-        /// Gets the bounding rectangle for each of the cells in the grid
+        /// Gets the bounding rectangle for each of the cells in the grid.
         /// </summary>
         public static RectangleF[,] GetAllCellBounds(ColorGridStyle style, Size drawRegion)
         {
@@ -66,7 +66,7 @@ namespace RubiksCubeSimulator.ColorGrid
 
         /// <summary>
         /// Combimes rectangles in a way that the master rect just ecompasses the
-        /// size AND the locations of the child rects
+        /// size and the locations of the child rectangles.
         /// </summary>
         private static RectangleF UniteRects(RectangleF[,] rects)
         {
@@ -88,7 +88,7 @@ namespace RubiksCubeSimulator.ColorGrid
         }
 
         /// <summary>
-        /// Gets the dimension of all cells
+        /// Gets the dimension of all cells.
         /// </summary>
         private static float GetCellDimension(ColorGridStyle style, Size drawRegion)
         {
@@ -112,7 +112,7 @@ namespace RubiksCubeSimulator.ColorGrid
         }
 
         /// <summary>
-        /// Draws the grid center middle of the region
+        /// Draws the grid center middle of the region.
         /// </summary>
         public static void Draw(ColorGridStyle style, Graphics graphics, Size drawRegion, bool enabled)
         {
@@ -135,6 +135,7 @@ namespace RubiksCubeSimulator.ColorGrid
                     float y = (yOffset + cellDim * clm) + spacing;
                     var path = RoundedRectangleF.Create(x, y, dim, dim, style.RoundedRadius);
                     graphics.FillPath(brush, path);
+                    brush.Dispose();
                 }
             }
         }

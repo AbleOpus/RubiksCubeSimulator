@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using RubiksCubeSimulator.Views;
+using RubiksCubeSimulator.Forms;
 
 namespace RubiksCubeSimulator
 {

@@ -1,100 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 
 namespace RubiksCubeSimulator.Rubiks
 {
     /// <summary>
-    /// Represents a 3x3 rubiks cube
+    /// Represents a 3x3 rubiks cube.
     /// </summary>
-    class RubiksCube : ICloneable
+    internal class RubiksCube : ICloneable
     {
-        private readonly Color[][,] _origColors;
+        private readonly Color[][,] origColors;
 
         #region Properties
+        public bool RaiseEvents { get; set; } = true;
 
-        private bool _raiseEvents = true;
-
-        public bool RaiseEvents
-        {
-            get { return _raiseEvents; }
-            set { _raiseEvents = value; }
-        }
-
-        private Color[][,] _allColors = new Color[6][,];
         /// <summary>
         /// Gets the color matrix for this cube. Face arrays are as follows:
-        /// Front 0, Back 1, Right 2, left 3, Up 4, Down 5
+        /// Front 0, Back 1, Right 2, left 3, Up 4, Down 5.
         /// </summary>
-        public Color[][,] AllColors
-        {
-            get { return _allColors; }
-        }
+        public Color[][,] AllColors { get; private set; } = new Color[6][,];
 
         public Color[,] FrontColors
         {
-            get { return _allColors[0]; }
-            private set
-            {
-                if (_allColors[0] == value) return;
-                _allColors[0] = value;
-            }
+            get { return AllColors[0]; }
+            private set {  AllColors[0] = value; }
         }
 
         public Color[,] BackColors
         {
-            get { return _allColors[1]; }
-            private set
-            {
-                if (_allColors[1] == value) return;
-                _allColors[1] = value;
-            }
+            get { return AllColors[1]; }
+            private set {AllColors[1] = value; }
         }
 
         public Color[,] RightColors
         {
-            get { return _allColors[2]; }
-            private set
-            {
-                if (_allColors[2] == value) return;
-                _allColors[2] = value;
-            }
+            get { return AllColors[2]; }
+            private set{ AllColors[2] = value; }
         }
 
         public Color[,] LeftColors
         {
-            get { return _allColors[3]; }
-            private set
-            {
-                if (_allColors[3] == value) return;
-                _allColors[3] = value;
-            }
+            get { return AllColors[3]; }
+            private set  {AllColors[3] = value; }
         }
 
         public Color[,] UpColors
         {
-            get { return _allColors[4]; }
-            private set
-            {
-                if (_allColors[4] == value) return;
-                _allColors[4] = value;
-            }
+            get { return AllColors[4]; }
+            private set{ AllColors[4] = value;  }
         }
 
         public Color[,] DownColors
         {
-            get { return _allColors[5]; }
-            private set
-            {
-                if (_allColors[5] == value) return;
-                _allColors[5] = value;
-            }
+            get { return AllColors[5]; }
+            private set { AllColors[5] = value; }
         }
 
         /// <summary>
         /// Gets whether the cube has valid, solvable color quantities.
-        /// The cube needs 9 of 6 distinct colors
+        /// The cube needs 9 of 6 distinct colors.
         /// </summary>
         public bool HasValidColorQuantities
         {
@@ -125,7 +91,7 @@ namespace RubiksCubeSimulator.Rubiks
         }
 
         /// <summary>
-        /// Gets whether this cube is solved
+        /// Gets whether this cube is solved.
         /// </summary>
         public bool Solved
         {
@@ -138,7 +104,8 @@ namespace RubiksCubeSimulator.Rubiks
 
                     foreach (var color in array)
                     {
-                        if (lastColor != color) return false;
+                        if (lastColor != color)
+                            return false;
                     }
                 }
 
@@ -148,41 +115,40 @@ namespace RubiksCubeSimulator.Rubiks
         #endregion
 
         /// <summary>
-        /// Creates an instance of the RubiksCube
+        /// Creates an instance of the RubiksCube.
         /// </summary>
         /// <param name="colors">Face arrays are as follows:
-        /// Front 0, Back 1, Right 2, left 3, Up 4, Down 5</param>
+        /// Front 0, Back 1, Right 2, left 3, Up 4, Down 5.</param>
         public RubiksCube(Color[][,] colors)
         {
-            _origColors = CloneColors(colors);
-            // Clone so we dont modify the original matrix
-            _allColors = colors;
+            origColors = CloneColors(colors);
+            // Clone so we dont modify the original matrix.
+            AllColors = colors;
         }
 
         /// <summary>
-        /// Occurs when a single move has been made
+        /// Occurs when a single move has been made.
         /// </summary>
         public event EventHandler<CubeMove> MoveMade;
         /// <summary>
-        /// Raises the MoveMade event
+        /// Raises the <see cref="MoveMade"/> event.
         /// </summary>
         protected virtual void OnMoveMade(CubeMove move)
         {
-            if (MoveMade != null)
-                MoveMade(this, move);
+            MoveMade?.Invoke(this, move);
         }
 
         /// <summary>
-        /// Resets the colors to the cubes unmodified state
+        /// Resets the colors to the cubes unmodified state.
         /// </summary>
         public void Restore()
         {
-            // Clone original so we do not modify it
-            _allColors = CloneColors(_origColors);
+            // Clone original so we do not modify it.
+            AllColors = CloneColors(origColors);
         }
 
         /// <summary>
-        /// Creates a solved cube from a specified color scheme
+        /// Creates a solved cube from a specified color scheme.
         /// </summary>
         public static RubiksCube Create(CubeColorScheme scheme)
         {
@@ -197,7 +163,7 @@ namespace RubiksCubeSimulator.Rubiks
         }
 
         /// <summary>
-        /// Gets the color scheme for this cube
+        /// Gets the color scheme for this cube.
         /// </summary>
         public CubeColorScheme GetColorScheme()
         {
@@ -211,7 +177,7 @@ namespace RubiksCubeSimulator.Rubiks
         }
 
         /// <summary>
-        /// Creates and returns a ColorDefect based on the current state of the cube
+        /// Creates and returns a ColorDefect based on the current state of the cube.
         /// </summary>
         public ColorDefect GetColorDefects()
         {
@@ -263,16 +229,16 @@ namespace RubiksCubeSimulator.Rubiks
         }
 
         /// <summary>
-        /// Reset the cube to its solved state
+        /// Reset the cube to its solved state.
         /// </summary>
         public void CleanSlate()
         {
             var cube = Create(GetColorScheme());
-            _allColors = cube._allColors;
+            AllColors = cube.AllColors;
         }
 
         /// <summary>
-        /// Creates a 3x3 face with a solid color
+        /// Creates a 3x3 face with a solid color.
         /// </summary>
         public static Color[,] CreateFace(Color faceColor)
         {
@@ -284,9 +250,9 @@ namespace RubiksCubeSimulator.Rubiks
             };
         }
         /// <summary>
-        /// Gets a cube face from the CubeSide specified
+        /// Gets a cube face from the CubeSide specified.
         /// </summary>
-        /// <returns>Null, if CubeSide.None specified</returns>
+        /// <returns>Null, if CubeSide.None specified.</returns>
         private Color[,] GetFaceColors(CubeSide side)
         {
             switch (side)
@@ -302,7 +268,7 @@ namespace RubiksCubeSimulator.Rubiks
         }
 
         /// <summary>
-        /// Sets the colors for the cube side specified
+        /// Sets the colors for the cube side specified.
         /// </summary>
         private void SetSide(CubeSide side, Color[,] value)
         {
@@ -318,7 +284,7 @@ namespace RubiksCubeSimulator.Rubiks
         }
 
         /// <summary>
-        /// Rotates the colors only on the surface of the side
+        /// Rotates the colors only on the surface of the side.
         /// </summary>
         private void RotateFace(CubeSide side, Rotation rotation)
         {
@@ -342,13 +308,13 @@ namespace RubiksCubeSimulator.Rubiks
         }
 
         /// <summary>
-        /// Gets the color matrix colors as a flat color array
+        /// Gets the color matrix colors as a flat color array.
         /// </summary>
         public IEnumerable<Color> GetColorsFlattened()
         {
             var colorStack = new Stack<Color>();
 
-            foreach (Color[,] array in _allColors)
+            foreach (Color[,] array in AllColors)
             {
                 for (int row = 0; row < array.GetLength(0); row++)
                 {
@@ -359,7 +325,6 @@ namespace RubiksCubeSimulator.Rubiks
 
             return colorStack;
         }
-
 
         private static Color[][,] CloneColors(Color[][,] source)
         {
@@ -388,7 +353,7 @@ namespace RubiksCubeSimulator.Rubiks
         }
 
         /// <summary>
-        /// Makes a move from one or more algorithms
+        /// Makes a move from one or more algorithms.
         /// </summary>
         public void MakeMove(params Algorithm[] algorithms)
         {
@@ -409,7 +374,8 @@ namespace RubiksCubeSimulator.Rubiks
                     case Algorithm.R:  MakeMove(CubeSide.Right, Rotation.Cw); break;
                     case Algorithm.Ri: MakeMove(CubeSide.Right, Rotation.Ccw); break;
                     default:
-                        throw new ArgumentException("Imvalid enum specified", "algorithms");
+                        throw new InvalidEnumArgumentException(
+                            nameof(algorithm), (int)algorithm, algorithm.GetType());
                 }
             }
         }
@@ -420,7 +386,7 @@ namespace RubiksCubeSimulator.Rubiks
             RotateFace(side, rotation);
             // Rotate non-face colors
             // No need to set middle colors as newColors is a full copy
-            var newColors = CloneColors(_allColors);
+            var newColors = CloneColors(AllColors);
 
             switch (side)
             {
@@ -703,18 +669,18 @@ namespace RubiksCubeSimulator.Rubiks
                 #endregion
             }
 
-            _allColors = newColors;
+            AllColors = newColors;
 
-            if (_raiseEvents)
+            if (RaiseEvents)
                 OnMoveMade(new CubeMove(side, rotation));
         }
 
         /// <summary>
-        /// Creates a new RubiksCube from this instance
+        /// Creates a new RubiksCube from this instance.
         /// </summary>
         public object Clone()
         {
-            var colors = CloneColors(_allColors);
+            var colors = CloneColors(AllColors);
             return new RubiksCube(colors);
         }
     }

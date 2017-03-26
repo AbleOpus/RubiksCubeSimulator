@@ -8,9 +8,10 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RubiksCubeSimulator</RootNamespace>
-    <AssemblyName>Rubiks Cube Sim</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <AssemblyName>Rubiks Cube Simulator</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -49,33 +50,24 @@
     <Compile Include="Rubiks\CubeColorScheme.cs" />
     <Compile Include="Rubiks\CubeMove.cs" />
     <Compile Include="Rubiks\Enumerations.cs" />
-    <Compile Include="Rubiks\Solver\RubiksBruteForcer.cs" />
-    <Compile Include="Rubiks\Solver\RubiksBruteForcerParams.cs" />
-    <Compile Include="Rubiks\Solver\RubiksBruteForceWorker.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SettingsBase.cs" />
-    <Compile Include="Views\ColorStrip.cs">
+    <Compile Include="Forms\ColorStrip.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Views\MainForm.cs">
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\MainForm.Designer.cs">
+    <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rubiks\RubiksCube.cs" />
-    <Compile Include="Views\CubeFaceDisplay.cs">
+    <Compile Include="Forms\CubeFaceDisplay.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Views\SolveForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\SolveForm.Designer.cs">
-      <DependentUpon>SolveForm.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="Views\MainForm.resx">
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -88,9 +80,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Views\SolveForm.resx">
-      <DependentUpon>SolveForm.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

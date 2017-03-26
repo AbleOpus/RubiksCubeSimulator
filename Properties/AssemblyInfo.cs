@@ -9,8 +9,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Simulates a rubiks cube")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Able Opus")]
-[assembly: AssemblyProduct("RubiksCubeSolver")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyProduct("Rubiks Cube Simulator")]
+[assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -9,17 +9,17 @@ namespace RubiksCubeSimulator
     class Settings : SettingsBase<Settings>
     {
         /// <summary>
-        /// Gets or sets the colors to pick from
+        /// Gets or sets the colors to pick from.
         /// </summary>
         public Color[] Palette { get; set; }
 
         /// <summary>
-        /// Gets or sets the last set cube colors
+        /// Gets or sets the last set cube colors.
         /// </summary>
         public Color[][,] CubeColors { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the color strip is locked
+        /// Gets or sets whether the color strip is locked.
         /// </summary>
         public bool ColorsLocked { get; set; }
 

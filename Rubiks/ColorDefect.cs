@@ -5,24 +5,24 @@ using System.Text;
 namespace RubiksCubeSimulator.Rubiks
 {
     /// <summary>
-    /// Represents information about potential rubiks cube color defects
+    /// Represents information about potential rubiks cube color defects.
     /// </summary>
-    class ColorDefect
+    internal class ColorDefect
     {
         /// <summary>
-        /// Gets the colors that occur more than 9 times on the cube
+        /// Gets the colors that occur more than 9 times on the cube.
         /// </summary>
-        public Color[] RedundantColors { get; private set; }
+        public Color[] RedundantColors { get; }
 
         /// <summary>
-        /// Gets all of the colors that are used for more than one face color
+        /// Gets all of the colors that are used for more than one face color.
         /// </summary>
-        public Color[] RedundantFaceColors { get; private set; }
+        public Color[] RedundantFaceColors { get; }
 
         /// <summary>
-        /// Gets whether there are more than 6 distinct colors
+        /// Gets whether there are more than 6 distinct colors.
         /// </summary>
-        public bool TooManyDistinct { get; private set; }
+        public bool TooManyDistinct { get; }
 
         public ColorDefect(Color[] redundantColors, Color[] redundantFaceColors, bool tooManyDistinct)
         {
@@ -43,7 +43,7 @@ namespace RubiksCubeSimulator.Rubiks
         } 
 
         /// <summary>
-        /// Gets a brief summarization of the first defect found
+        /// Gets a brief summarization of the first defect found.
         /// </summary>
         public string GetShortReport()
         {
@@ -54,19 +54,18 @@ namespace RubiksCubeSimulator.Rubiks
                 return "There is too much of: " + colorString;
             }
             // There are too many distinct colors
-            else if (TooManyDistinct)
+            if (TooManyDistinct)
             {
                 return "There are too many distinct colors";
             }
-            else if (RedundantFaceColors.Length > 0)
+
+            if (RedundantFaceColors.Length > 0)
             {
                 string colorString = ColorArrayToString(RedundantFaceColors);
                 return "Face colors are invalid: " + colorString;
             }
-            else
-            {
-                return string.Empty;
-            }
+
+            return string.Empty;
         }
     }
 }

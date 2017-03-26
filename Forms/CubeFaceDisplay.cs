@@ -4,113 +4,106 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using RubiksCubeSimulator.ColorGrid;
+using RubiksCubeSimulator.Properties;
 using RubiksCubeSimulator.Rubiks;
 
-namespace RubiksCubeSimulator.Views
+namespace RubiksCubeSimulator.Forms
 {
     /// <summary>
-    /// Specifies a mode for adjusting the cube colors
+    /// Specifies a mode for adjusting the cube colors.
     /// </summary>
     public enum ClickMode
     {
         /// <summary>
-        /// No effect will happen
+        /// No effect will happen.
         /// </summary>
         None,
         /// <summary>
-        /// The user will be able to rotate with the left and right mouse buttons
+        /// The user will be able to rotate with the left and right mouse buttons.
         /// </summary>
         Rotation,
         /// <summary>
-        /// The user will be able to set colors with the right mouse buttons
+        /// The user will be able to set colors with the right mouse buttons.
         /// </summary>
         ColorSet
     }
 
     /// <summary>
-    /// Represents a grid point mapper, to build point arrays on a grid
+    /// Represents a grid point mapper, to build point arrays on a grid.
     /// </summary>
-    [DefaultEvent("PointsChanged")]
-    class CubeFaceDisplay : Control
+    internal class CubeFaceDisplay : Control
     {
-        private RectangleF _hoveredRect;
+        private RectangleF hoveredRect;
+
+        private static readonly Cursor rotateCursor = new Cursor(Resources.rotate.GetHicon());
 
         #region Properties
-        private ColorGridStyle Style
-        {
-            get
-            {
-                return new ColorGridStyle(GetDisplayColors(), 0.05f, RoundedRadius);
-            }
-        }
+        private ColorGridStyle Style =>
+            new ColorGridStyle(GetDisplayColors(), 0.05f, RoundedRadius);
 
-        private ClickMode _clickMode;
+        private ClickMode clickMode;
         [Category("Appearance")]
         [DefaultValue(ClickMode.None)]
         [Description("The operations to perform when clicking")]
         public ClickMode ClickMode
         {
-            get { return _clickMode; }
+            get { return clickMode; }
             set
             {
-                if (_clickMode == value) return;
-                _clickMode = value;
+                if (clickMode == value) return;
+                clickMode = value;
 
-                if (_clickMode == ClickMode.ColorSet)
+                switch (clickMode)
                 {
-                    this.Cursor = Cursors.Hand;
-                }
-                else if (_clickMode == ClickMode.Rotation)
-                {
-                    this.Cursor = Cursors.NoMoveHoriz;
-                }
-                else
-                {
-                    this.Cursor = Cursors.Default;
+                    case ClickMode.ColorSet: Cursor = Cursors.Default; break;
+                    case ClickMode.Rotation: Cursor = rotateCursor; break;
+                    default: Cursor = Cursors.Default; break;
                 }
 
-                this.Invalidate();
+  
+                Invalidate();
             }
         }
 
-        private CubeSide _face = CubeSide.None;
-        [Category("Appearance")]
-        [DefaultValue(CubeSide.None)]
+        private CubeSide face = CubeSide.None;
+        [Category("Appearance"),DefaultValue(CubeSide.None)]
         [Description("The face or side of the cube to handle and display")]
         public CubeSide Face
         {
-            get { return _face; }
+            get { return face; }
             set
             {
-                _face = value;
-                this.Invalidate();
+                face = value;
+                Invalidate();
             }
         }
 
-        private Color _newColor;
+        private Color newColor;
         [Description("Determines the color to be set when right-clicking a cell")]
         [Category("Behavior")]
         public Color NewColor
         {
-            get { return _newColor; }
+            get { return newColor; }
             set
             {
-                if (_newColor == value) return;
-                _newColor = value;
-                this.Invalidate();
+                if (newColor != value)
+                {
+                    newColor = value;
+                    Invalidate();
+                }
             }
         }
 
-        private RubiksCube _rubiksCube;
+        private RubiksCube rubiksCube;
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public RubiksCube RubiksCube
         {
-            get { return _rubiksCube; }
+            get { return rubiksCube; }
             set
             {
-                _rubiksCube = value;
-                this.Invalidate();
+                rubiksCube = value;
+                Invalidate();
             }
         }
 
@@ -118,7 +111,7 @@ namespace RubiksCubeSimulator.Views
         {
             get
             {
-                if (_rubiksCube == null) return null;
+                if (rubiksCube == null) return null;
 
                 switch (Face)
                 {
@@ -133,17 +126,16 @@ namespace RubiksCubeSimulator.Views
             }
         }
 
-        private int _roundedRadius = 5;
-        [Category("Appearance")]
-        [DefaultValue(5)]
+        private int roundedRadius = 5;
+        [Category("Appearance"),DefaultValue(5)]
         [Description("The corner radius of the rounded rectangles used with this control")]
         public int RoundedRadius
         {
-            get { return _roundedRadius; }
+            get { return roundedRadius; }
             set
             {
-                _roundedRadius = value;
-                this.Invalidate();
+                roundedRadius = value;
+                Invalidate();
             }
         }
 
@@ -159,13 +151,19 @@ namespace RubiksCubeSimulator.Views
         public CubeFaceDisplay()
         {
             ClickMode = ClickMode.None;
-            this.SetStyle(ControlStyles.ResizeRedraw |
+            SetStyle(ControlStyles.ResizeRedraw |
                           ControlStyles.OptimizedDoubleBuffer |
                           ControlStyles.SupportsTransparentBackColor, true);
             base.BackColor = Color.Transparent;
         }
 
         #region Overrides
+        protected override void Dispose(bool disposing)
+        {
+            rotateCursor.Dispose();
+            base.Dispose(disposing);
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -173,23 +171,21 @@ namespace RubiksCubeSimulator.Views
             e.Graphics.Clear(GetBackColor());
             ColorGridRendering.Draw(Style, e.Graphics, ClientSize, Enabled);
 
-            if (ClickMode == ClickMode.ColorSet && _hoveredRect != Rectangle.Empty)
+            if (ClickMode == ClickMode.ColorSet && hoveredRect != Rectangle.Empty)
             {
-                var path = RoundedRectangleF.Create(_hoveredRect, RoundedRadius);
+                var path = RoundedRectangleF.Create(hoveredRect, RoundedRadius);
                 Pen pen = new Pen(Color.White, 3f);
                 pen.Alignment = PenAlignment.Center;
                 e.Graphics.DrawPath(pen, path);
+                pen.Dispose();
             }
             else if (ClickMode == ClickMode.Rotation)
             {
-                var rect = ColorGridRendering.GetMasterRectangle(Style, this.Size);
+                var rect = ColorGridRendering.GetMasterRectangle(Style, Size);
 
-                if (rect.Contains(this.PointToClient(Cursor.Position)))
+                if (rect.Contains(PointToClient(Cursor.Position)))
                 {
-                    //var path = RoundedRectangleF.Create(rect, RoundedRadius);
-                    //Pen pen = new Pen(Color.Gray, 8f);
-                    // e.Graphics.DrawPath(pen, path);
-                    ControlPaint.DrawBorder3D(e.Graphics, rect.ToRect(),
+                    ControlPaint.DrawBorder3D(e.Graphics, Rectangle.Truncate(rect),
                         Border3DStyle.Flat);
                 }
             }
@@ -198,8 +194,8 @@ namespace RubiksCubeSimulator.Views
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
-            _hoveredRect = Rectangle.Empty;
-            this.Invalidate();
+            hoveredRect = Rectangle.Empty;
+            Invalidate();
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
@@ -218,11 +214,11 @@ namespace RubiksCubeSimulator.Views
             {
                 if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) return;
                 var r = (e.Button == MouseButtons.Left) ? Rotation.Ccw : Rotation.Cw;
-                _rubiksCube.MakeMove(Face, r);
+                rubiksCube.MakeMove(Face, r);
                 InvalidateOtherCubeControls();
             }
 
-            this.Invalidate();
+            Invalidate();
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -230,40 +226,34 @@ namespace RubiksCubeSimulator.Views
             base.OnMouseMove(e);
 
             var rect = ColorGridRendering.GetCellRectFromPosition
-                (Style, e.Location, this.ClientSize);
+                (Style, e.Location, ClientSize);
 
-            if (rect != _hoveredRect)
+            if (rect != hoveredRect)
             {
-                _hoveredRect = rect;
-                OnHoverCellChanged(_hoveredRect);
+                hoveredRect = rect;
+                OnHoverCellChanged(hoveredRect);
 
                 if (ClickMode != ClickMode.None)
-                    this.Invalidate();
+                    Invalidate();
             }
         }
 
-        protected override Size DefaultSize
-        {
-            get { return new Size(300, 300); }
-        }
+        protected override Size DefaultSize => new Size(300, 300);
 
         [Description("Occurs when a new cell has been hovered over by the mouse")]
         public event EventHandler<RectangleF> HoveredCellChanged;
         /// <summary>
-        /// Raises the HoveredCellChanged event
+        /// Raises the <see cref="HoveredCellChanged"/> event.
         /// </summary>
         protected virtual void OnHoverCellChanged(RectangleF cellPos)
         {
-            if (HoveredCellChanged != null)
-            {
-                HoveredCellChanged(this, cellPos);
-            }
+            HoveredCellChanged?.Invoke(this, cellPos);
         }
 
         [Description("Occurs when a cell has been clicked by the mouse")]
         public event EventHandler<CellMouseClickedEventArgs> CellMouseClicked;
         /// <summary>
-        /// Raises the CellMouseClicked event
+        /// Raises the <see cref="CellMouseClicked"/> event
         /// </summary>
         protected virtual void OnCellMouseClicked(Point pos, MouseButtons buttons)
         {
@@ -277,27 +267,28 @@ namespace RubiksCubeSimulator.Views
         protected override void OnEnabledChanged(EventArgs e)
         {
             base.OnEnabledChanged(e);
-            this.Invalidate();
+            Invalidate();
         }
         #endregion
 
         private Color[,] GetDisplayColors()
         {
-            var face = FaceColors;
-            // If face == null then the CubeSide enum has not been set
-            if (_rubiksCube == null || face == null)
+            var faceColors = FaceColors;
+            // If face == null then the CubeSide enum has not been set.
+            if (rubiksCube == null || faceColors == null)
             {
                 return RubiksCube.CreateFace(Color.White);
             }
-            else return face;
+
+            return faceColors;
         }
 
         /// <summary>
-        /// Gets the appropriate background color for painting
+        /// Gets the appropriate background color for painting.
         /// </summary>
         private Color GetBackColor()
         {
-            if (this.BackColor == Color.Transparent && this.Parent != null)
+            if (BackColor == Color.Transparent && Parent != null)
                 return Parent.BackColor;
             else
                 return BackColor;
@@ -315,42 +306,43 @@ namespace RubiksCubeSimulator.Views
                 // Equality with this because we are already invalidating elsewhere
                 // and have the same rubik cube
                 if (display != null && display != this &&
-                    display.RubiksCube == this.RubiksCube) display.Invalidate();
+                    display.RubiksCube == RubiksCube)
+                    display.Invalidate();
             }
         }
     }
 
     /// <summary>
-    /// Represents event arguments for the cref="CellMouseClicked" event
+    /// Represents event arguments for the <see cref="CubeFaceDisplay.CellMouseClicked"/> event.
     /// </summary>
-    class CellMouseClickedEventArgs : EventArgs
+    internal class CellMouseClickedEventArgs : EventArgs
     {
         /// <summary>
-        /// Gets the position of the cell
+        /// Gets the position of the cell.
         /// </summary>
-        public Point CellPosition { get; private set; }
+        public Point CellPosition { get; }
 
         /// <summary>
-        /// Gets the x position of the cell
+        /// Gets the x position of the cell.
         /// </summary>
-        public int CellX
-        {
-            get { return CellPosition.X; }
-        }
+        public int CellX => CellPosition.X;
 
         /// <summary>
-        /// Gets the y position of the cell
+        /// Gets the y position of the cell.
         /// </summary>
-        public int CellY
-        {
-            get { return CellPosition.Y; }
-        }
+        public int CellY => CellPosition.Y;
 
         /// <summary>
-        /// Gets the buttons used to click the cell
+        /// Gets the buttons used to click the cell.
         /// </summary>
-        public MouseButtons Buttons { get; private set; }
+        public MouseButtons Buttons { get;  }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CellMouseClickedEventArgs"/>
+        /// class with the specified arguments.
+        /// </summary>
+        /// <param name="cellPos">The position of the cell.</param>
+        /// <param name="buttons">The buttons used to click the cell.</param>
         public CellMouseClickedEventArgs(Point cellPos, MouseButtons buttons)
         {
             CellPosition = cellPos;
