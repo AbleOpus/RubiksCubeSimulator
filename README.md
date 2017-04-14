@@ -1,4 +1,4 @@
-##Using The Application
+## Using The Application
 
 The application presents the rubiks cube in 2D by unfolding it. The back face is unfolded to the right. The color strip at the bottom enables one to set the cube to a scrambled state. 
 
